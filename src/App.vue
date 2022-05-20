@@ -4,7 +4,7 @@
 
     <HeaderComp @sendInput='recivedQuery'
     />
-
+  
     <MainComp
     :resultFromApi="result"/>
 
@@ -26,7 +26,7 @@ export default {
   },
   data(){
     return{
-      queryToPass: 'potter',
+      queryToPass: '',
       apiUrl: 'https://api.themoviedb.org/3/search/movie',
       result: []
     }
@@ -34,6 +34,7 @@ export default {
   methods:{
     recivedQuery(value){
       this.queryToPass = value;
+      this.getAPI();
     },
     getAPI(){
       axios.get(this.apiUrl,{
@@ -46,12 +47,13 @@ export default {
       .then(res => {
         console.log(res.data.results , 'sono i res')
         this.result = res.data.results;
-        
+        // serve a ordinare i film dal voto maggiore al voto minore
+        this.result.sort((a, b) =>  b.vote_average - a.vote_average);
       })
     },
   },
   mounted(){
-    this.getAPI()
+    //this.getAPI()
   }
 }
 </script>
