@@ -8,8 +8,8 @@
         @mouseleave="show = -1"
         class=" d-flex h-100 position-relative">
 
-        <img class="h-100 w-100 w-100" :src="`https://image.tmdb.org/t/p/w200${result.poster_path}`" alt="">
-
+        <img v-if="result.poster_path != null" class="h-100 w-100 w-100" :src="`https://image.tmdb.org/t/p/w200${result.poster_path}`" alt="">
+        <img v-else src="https://picsum.photos/180/270" alt="">
         <div 
         v-if="show == index" 
         class="film-info position-absolute d-flex flex-column">
@@ -135,7 +135,7 @@ export default {
     }
     p{
       img.flag-img{
-        width: 30px;
+        width: 40px;
         filter: none;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
@@ -158,7 +158,7 @@ export default {
   }
  }
 .vote{
-  color: blue;
+  color: rgb(248, 178, 3);
 }
 
 </style>
