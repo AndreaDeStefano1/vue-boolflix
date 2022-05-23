@@ -7,8 +7,8 @@
     </div>
   
     <div class=" d-flex">
-      <input v-model="userInput" class="" type="text">
-      <button @click="$emit('sendInput', userInput)" class=" btn btn-success">Cerca</button>
+      <input @keyup.enter="startSearch(userInput)" v-model="userInput" class="" type="text">
+      <button  @click="startSearch(userInput)" class=" btn btn-success">Cerca</button>
     </div>
   </nav>
 </header>
@@ -22,6 +22,11 @@ export default {
   data(){
     return{
       userInput: '',
+    }
+  },
+  methods:{
+    startSearch(value){
+      this.$emit('sendInput', value)
     }
   }
 
