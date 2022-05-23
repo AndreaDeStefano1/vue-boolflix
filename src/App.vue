@@ -9,6 +9,8 @@
     :resultFromApi="resultFilm"
     :resultFromApiSeries="resultSeries"/>
 
+    
+
   </div>
 
 </template>

@@ -17,7 +17,15 @@
           <p> <span>Titolo:</span><br>{{result.title}} </p>
           <p> <span>Titolo Originale:</span><br>{{result.original_title}}</p>
           <p><img :src="flagGen(result.original_language)" alt="" class="flag-img"> </p> 
-          <p> <span>Media dei voti:</span> {{result.vote_average}}</p>
+          <p>
+            <font-awesome-icon icon="fa-solid fa-star" :class="{vote : avgVoteToStar(result.vote_average) > 0 }" />
+            <font-awesome-icon icon="fa-solid fa-star" :class="{vote : avgVoteToStar(result.vote_average) > 1 }" />
+            <font-awesome-icon icon="fa-solid fa-star" :class="{vote : avgVoteToStar(result.vote_average) > 2 }" />
+            <font-awesome-icon icon="fa-solid fa-star" :class="{vote : avgVoteToStar(result.vote_average) > 3 }" />
+            <font-awesome-icon icon="fa-solid fa-star" :class="{vote : avgVoteToStar(result.vote_average) > 4 }" />
+          </p>
+          
+          <!-- <p> <span>Media dei voti:</span> {{result.vote_average}}</p> -->
 
         </div>
 
@@ -63,6 +71,10 @@ export default {
     flagGen(value){
       value = this.fixFlag(value)
       return 'https://countryflagsapi.com/png/' + value
+    },
+    avgVoteToStar(value){
+      value = Math.round(value) / 2
+      return value
     }
   }
 
@@ -145,5 +157,8 @@ export default {
     }
   }
  }
+.vote{
+  color: blue;
+}
 
 </style>
