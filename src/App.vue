@@ -6,7 +6,8 @@
     />
   
     <MainComp
-    :resultFromApi="result"/>
+    :resultFromApi="resultFilm"
+    :resultFromApiSeries="resultSeries"/>
 
   </div>
 
@@ -28,13 +29,16 @@ export default {
     return{
       queryToPass: '',
       apiUrl: 'https://api.themoviedb.org/3/search/movie',
-      result: []
+      apiUrlForSeries: 'https://api.themoviedb.org/3/search/tv',
+      resultFilm: [],
+      resultSeries: [],
     }
   },
   methods:{
     recivedQuery(value){
       this.queryToPass = value;
       this.getAPI();
+      this.getApiForSeries();
     },
     getAPI(){
       axios.get(this.apiUrl,{
@@ -45,10 +49,25 @@ export default {
         }
       })
       .then(res => {
-        console.log(res.data.results , 'sono i res')
-        this.result = res.data.results;
+        console.log(res.data.results , 'sono i res film')
+        this.resultFilm = res.data.results;
         // serve a ordinare i film dal voto maggiore al voto minore
-        this.result.sort((a, b) =>  b.vote_average - a.vote_average);
+        this.resultFilm.sort((a, b) =>  b.vote_average - a.vote_average);
+      })
+    },
+    getApiForSeries(){
+      axios.get(this.apiUrlForSeries,{
+        params: {
+          api_key: '09c0eb08b2b03d28fec477a94fe6bd5f',
+          language: 'it-IT',
+          query: this.queryToPass
+        }
+      })
+      .then(res => {
+        console.log(res.data.results , 'sono i res serie')
+        this.resultSeries = res.data.results;
+        // serve a ordinare i film dal voto maggiore al voto minore
+        this.resultSeries.sort((a, b) =>  b.vote_average - a.vote_average);
       })
     },
   },

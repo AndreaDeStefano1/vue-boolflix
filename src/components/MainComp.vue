@@ -6,6 +6,13 @@
       <CardComp class=" d-flex flex-wrap gap-3" :resultFromApi="resultFromApi"/>
     </div>
   </div>
+
+  <div class="container">
+    <h1 class="pb-5">Serie Tv</h1>
+    <div>
+      <CardCompForSeries class=" d-flex flex-wrap gap-3" :resultFromApiSeries="resultFromApiSeries"/>
+    </div>
+  </div>
 </main>
 
   
@@ -13,13 +20,18 @@
 
 <script>
 import CardComp from './CardComp.vue';
+import CardCompForSeries from './CardCompForSeries.vue';
 
 export default {
-    name: "MainComp",
-    props: {
-        resultFromApi: Array
-    },
-    components: { CardComp }
+  name: "MainComp",
+  props: {
+    resultFromApi: Array,
+    resultFromApiSeries: Array
+  },
+  components: { 
+    CardComp,
+    CardCompForSeries 
+  }
 }
 </script>
 
