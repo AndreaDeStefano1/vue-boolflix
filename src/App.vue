@@ -72,10 +72,26 @@ export default {
         this.resultSeries.sort((a, b) =>  b.vote_average - a.vote_average);
       })
     },
+    getTrendingFilm(){
+      axios.get('https://api.themoviedb.org/3/trending/movie/week?api_key=09c0eb08b2b03d28fec477a94fe6bd5f')
+      .then(res => {
+        console.log(res.data.results , 'sono i res film')
+        this.resultFilm = res.data.results;
+      })
+    },
+    getTrendingSeries(){
+      axios.get('https://api.themoviedb.org/3/trending/tv/week?api_key=09c0eb08b2b03d28fec477a94fe6bd5f')
+      .then(res => {
+        console.log(res.data.results , 'sono i res film')
+        this.resultSeries = res.data.results;
+      })
+    },
+
   },
   mounted(){
-    //this.getAPI()
-  }
+    this.getTrendingFilm();
+    this.getTrendingSeries();
+    }
 }
 </script>
 

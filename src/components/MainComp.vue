@@ -1,6 +1,6 @@
 <template>
 <main>
-  <div class="container">
+  <div class="container film-container">
     <h1 class="pb-5">Film</h1>
     <div>
       <CardComp class=" d-flex flex-wrap gap-3" :resultFromApi="resultFromApi"/>
