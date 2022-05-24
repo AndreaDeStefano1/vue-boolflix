@@ -19,14 +19,16 @@
           <p><img :src="flagGen(result.original_language)" alt="" class="flag-img"> </p> 
           
           <p>
-            <font-awesome-icon icon="fa-solid fa-star" :class="{vote : avgVoteToStar(result.vote_average) > 0 }" />
-            <font-awesome-icon icon="fa-solid fa-star" :class="{vote : avgVoteToStar(result.vote_average) > 1 }" />
-            <font-awesome-icon icon="fa-solid fa-star" :class="{vote : avgVoteToStar(result.vote_average) > 2 }" />
-            <font-awesome-icon icon="fa-solid fa-star" :class="{vote : avgVoteToStar(result.vote_average) > 3 }" />
-            <font-awesome-icon icon="fa-solid fa-star" :class="{vote : avgVoteToStar(result.vote_average) > 4 }" />
+
+            <font-awesome-icon 
+            icon="fa-solid fa-star" 
+            v-for="(starNumber, index) in 5" 
+            :key="starNumber"
+            :class="{vote : avgVoteToStar(result.vote_average) > index }"
+            />
+
           </p>
           
-          <!-- <p> <span>Media dei voti:</span> {{result.vote_average}}</p> -->
 
         </div>
 
