@@ -8,7 +8,9 @@
     :resultFromApi="resultFilm"
     :resultFromApiSeries="resultSeries" 
     :isLoadedFilms="isLoadedFilms"
-    :isLoadedSeries="isLoadedSeries"/>
+    :isLoadedSeries="isLoadedSeries"
+    :showFilms="showFilms"
+    :showSeries="showSeries"/>
 
     
 
@@ -37,16 +39,27 @@ export default {
       resultSeries: [],
       isLoadedFilms: false,
       isLoadedSeries: false,
+      showFilms: false,
+      showSeries: false
     }
   },
   methods:{
     recivedQuery(value , value2){
-      this.isLoadedFilms = false,
-      this.isLoadedSeries = false,
-      console.log(value2)
+      this.isLoadedFilms = false;
+      this.isLoadedSeries = false;
+      this.showFilms = false;
+      this.showSeries = false;
       this.queryToPass = value;
-      this.getAPI();
-      this.getApiForSeries();
+      if(value2 == 'all'){
+        this.getAPI();
+        this.getApiForSeries();       
+      }
+      else if(value2 == 'movie'){
+        this.getAPI();
+      }
+      else if(value2 == 'tv'){
+        this.getApiForSeries();
+      }
     },
     getAPI(){
       axios.get(this.apiUrl,{
@@ -59,7 +72,8 @@ export default {
       .then(res => {
         console.log(res.data.results , 'sono i res film')
         this.resultFilm = res.data.results;
-        this.isLoadedFilms = true
+        this.isLoadedFilms = true;
+        this.showFilms = true;
         // serve a ordinare i film dal voto maggiore al voto minore
         this.resultFilm.sort((a, b) =>  b.vote_average - a.vote_average);
       })
@@ -76,6 +90,7 @@ export default {
         console.log(res.data.results , 'sono i res serie')
         this.resultSeries = res.data.results;
         this.isLoadedSeries = true;
+        this.showSeries = true;
         // serve a ordinare i film dal voto maggiore al voto minore
         this.resultSeries.sort((a, b) =>  b.vote_average - a.vote_average);
       })
@@ -85,6 +100,7 @@ export default {
       .then(res => {
         this.resultFilm = res.data.results;
         this.isLoadedFilms = true;
+        this.showFilms = true;
       })
     },
     getTrendingSeries(){
@@ -92,6 +108,7 @@ export default {
       .then(res => {
         this.resultSeries = res.data.results;
         this.isLoadedSeries = true;
+        this.showSeries = true;
       })
     },
 

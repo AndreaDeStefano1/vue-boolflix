@@ -1,7 +1,7 @@
 <template>
 <main>
 
-  <div class="container main-container">
+  <div v-if="showFilms" class="container main-container">
     <h1 class="pb-5">Film</h1>
 
     <div v-if="isLoadedFilms">
@@ -16,7 +16,7 @@
 
   </div>
 
-  <div class="container main-container">
+  <div v-if="showSeries" class="container main-container">
     <h1 class="pb-5">Serie Tv</h1>
 
     <div v-if="isLoadedSeries">      
@@ -54,6 +54,8 @@ export default {
     resultFromApiSeries: Array,
     isLoadedFilms: Boolean,
     isLoadedSeries: Boolean,
+    showFilms: Boolean,
+    showSeries: Boolean
   },
   components: { 
     CardComp,

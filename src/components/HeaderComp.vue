@@ -8,8 +8,8 @@
     
 
     <div class=" d-flex">
-      
-      <select v-model="typeToSearch" name="searchType" id="">
+
+      <select v-model="typeToSearch" @change="startSearch(userInput , typeToSearch)" name="searchType" id="">
         <option value="all">All</option>
         <option value="movie">Movie</option>
         <option value="tv">Tv</option>
