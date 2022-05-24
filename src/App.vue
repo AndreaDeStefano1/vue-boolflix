@@ -6,7 +6,9 @@
   
     <MainComp
     :resultFromApi="resultFilm"
-    :resultFromApiSeries="resultSeries" />
+    :resultFromApiSeries="resultSeries" 
+    :isLoadedFilms="isLoadedFilms"
+    :isLoadedSeries="isLoadedSeries"/>
 
     
 
@@ -33,10 +35,14 @@ export default {
       apiUrlForSeries: 'https://api.themoviedb.org/3/search/tv',
       resultFilm: [],
       resultSeries: [],
+      isLoadedFilms: false,
+      isLoadedSeries: false,
     }
   },
   methods:{
     recivedQuery(value , value2){
+      this.isLoadedFilms = false,
+      this.isLoadedSeries = false,
       console.log(value2)
       this.queryToPass = value;
       this.getAPI();
@@ -53,6 +59,7 @@ export default {
       .then(res => {
         console.log(res.data.results , 'sono i res film')
         this.resultFilm = res.data.results;
+        this.isLoadedFilms = true
         // serve a ordinare i film dal voto maggiore al voto minore
         this.resultFilm.sort((a, b) =>  b.vote_average - a.vote_average);
       })
@@ -68,6 +75,7 @@ export default {
       .then(res => {
         console.log(res.data.results , 'sono i res serie')
         this.resultSeries = res.data.results;
+        this.isLoadedSeries = true;
         // serve a ordinare i film dal voto maggiore al voto minore
         this.resultSeries.sort((a, b) =>  b.vote_average - a.vote_average);
       })
@@ -75,15 +83,15 @@ export default {
     getTrendingFilm(){
       axios.get('https://api.themoviedb.org/3/trending/movie/week?api_key=09c0eb08b2b03d28fec477a94fe6bd5f')
       .then(res => {
-        console.log(res.data.results , 'sono i res film')
         this.resultFilm = res.data.results;
+        this.isLoadedFilms = true;
       })
     },
     getTrendingSeries(){
       axios.get('https://api.themoviedb.org/3/trending/tv/week?api_key=09c0eb08b2b03d28fec477a94fe6bd5f')
       .then(res => {
-        console.log(res.data.results , 'sono i res tv')
         this.resultSeries = res.data.results;
+        this.isLoadedSeries = true;
       })
     },
 
