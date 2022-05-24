@@ -17,6 +17,7 @@
           <p> <span>Titolo:</span><br>{{result.title  || result.name}} </p>
           <p> <span>Titolo Originale:</span><br>{{result.original_title || result.original_name}}</p>
           <p><img :src="flagGen(result.original_language)" alt="" class="flag-img"> </p> 
+          
           <p>
             <font-awesome-icon icon="fa-solid fa-star" :class="{vote : avgVoteToStar(result.vote_average) > 0 }" />
             <font-awesome-icon icon="fa-solid fa-star" :class="{vote : avgVoteToStar(result.vote_average) > 1 }" />

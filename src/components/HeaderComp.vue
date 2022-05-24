@@ -5,14 +5,18 @@
     <div class="logo">
       <img src="../assets/img/logo.png" alt="">
     </div>
-    <select v-model="typeToSearch" name="" id="">
-      <option value="all">All</option>
-      <option value="movie">Movie</option>
-      <option value="tv">Tv</option>
-    </select>
+    
+
     <div class=" d-flex">
-      <input @keyup.enter="startSearch(userInput)" v-model="userInput" class="" type="text">
-      <button  @click="startSearch(userInput)" class=" btn btn-success">Cerca</button>
+      
+      <select v-model="typeToSearch" name="searchType" id="">
+        <option value="all">All</option>
+        <option value="movie">Movie</option>
+        <option value="tv">Tv</option>
+      </select>
+
+      <input @keyup.enter="startSearch(userInput , typeToSearch)" v-model="userInput" class="" type="text">
+      <button  @click="startSearch(userInput , typeToSearch)" class=" btn btn-success">Cerca</button>
     </div>
   </nav>
 </header>
@@ -30,8 +34,8 @@ export default {
     }
   },
   methods:{
-    startSearch(value){
-      this.$emit('sendInput', value)
+    startSearch(userInput , typeToSearch){
+      this.$emit('sendInput', userInput , typeToSearch)
     }
   }
 
@@ -49,6 +53,9 @@ header{
     width: 400px;
     margin: 0 10px;
 
+  }
+  select{
+    width: 100px;
   }
 }
 

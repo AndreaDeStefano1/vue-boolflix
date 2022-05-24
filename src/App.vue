@@ -36,7 +36,8 @@ export default {
     }
   },
   methods:{
-    recivedQuery(value){
+    recivedQuery(value , value2){
+      console.log(value2)
       this.queryToPass = value;
       this.getAPI();
       this.getApiForSeries();
