@@ -33,10 +33,26 @@
         </div>
 
         <div 
-        v-if="show == index" 
+        v-if="show == index"
+        @mouseleave="showAdd = false" 
         class="film-overview position-absolute">
-          <div class="text">
-            <p> {{result.overview}} </p>
+          <div @click="getCast(result.id), getGenre(result.genre_ids)" class="text position-relative">
+             
+            <ul v-if="showAdd" class="additional-info position-absolute">
+              <span>Attori:</span>
+              <li v-for="name in castArray" :key="name">
+                {{name}}
+              </li>
+              <span>Generi:</span>
+              <li v-for="genre in genreArray" :key="genre">
+                {{genre}}
+              </li>
+            </ul>
+            
+            <p v-if="!showAdd">
+              Clicca per Maggiori info<br>
+              {{result.overview}} 
+            </p>
           </div>
           
           
@@ -50,7 +66,7 @@
 </template>
 
 <script>
-//import axios from 'axios';
+import axios from 'axios';
 
 export default {
   name: 'CardComp',
@@ -61,7 +77,10 @@ export default {
     return{
       show: -1,
       flagApiUrl: 'https://countryflagsapi.com/png/',
-      linkFlag: ''
+      linkFlag: '',
+      showAdd: false,
+      castArray: [],
+      genreArray: [],
     }
   },
   methods:{
@@ -78,6 +97,40 @@ export default {
     avgVoteToStar(value){
       value = Math.round(value) / 2
       return value
+    },
+    getCast(id){
+      this.castArray = [];
+      axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=09c0eb08b2b03d28fec477a94fe6bd5f&language=it-IT`)
+      .then(res => {
+        this.showAdd = !this.showAdd
+        let castTemporary = res.data.cast
+        for (let i = 0; i < 5; i++) {
+          const element = castTemporary[i];
+          this.castArray.push(element.name)
+          
+        }
+      })
+      
+    },
+    getGenre(genreTemporary){
+      this.genreArray = [];
+      axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=09c0eb08b2b03d28fec477a94fe6bd5f&language=it-IT`)
+      .then(res => {
+        let arr = res.data.genres
+        genreTemporary.forEach(genre => {
+          // console.log(genre )
+          for (let i = 0; i < arr.length; i++) {
+            const element = arr[i];
+            console.log(genre == element.id)
+            if(genre == element.id){
+              this.genreArray.push(element.name)
+            }
+            
+          }
+        console.log('ciao', this.genreArray)
+          
+        });
+      })
     }
   }
 
@@ -119,12 +172,20 @@ export default {
       overflow: scroll;
       -ms-overflow-style: none;  
       scrollbar-width: none;
-      color: white; 
+      color: white;
+
       &::-webkit-scrollbar {
-      display: none; 
+        display: none; 
+      }
     }
+    .additional-info{
+      p{
+        font-size: 15px;
+      }
+      li{
+        font-size: 13px;
+      }
     }
-    
   }
   .film-info{
     padding: 4px;

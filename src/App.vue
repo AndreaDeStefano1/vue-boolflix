@@ -70,7 +70,6 @@ export default {
         }
       })
       .then(res => {
-        console.log(res.data.results , 'sono i res film')
         this.resultFilm = res.data.results;
         this.isLoadedFilms = true;
         this.showFilms = true;
