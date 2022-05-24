@@ -5,7 +5,11 @@
     <div class="logo">
       <img src="../assets/img/logo.png" alt="">
     </div>
-  
+    <select v-model="typeToSearch" name="" id="">
+      <option value="all">All</option>
+      <option value="movie">Movie</option>
+      <option value="tv">Tv</option>
+    </select>
     <div class=" d-flex">
       <input @keyup.enter="startSearch(userInput)" v-model="userInput" class="" type="text">
       <button  @click="startSearch(userInput)" class=" btn btn-success">Cerca</button>
@@ -22,6 +26,7 @@ export default {
   data(){
     return{
       userInput: '',
+      typeToSearch: 'all'
     }
   },
   methods:{

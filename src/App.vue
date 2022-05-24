@@ -2,12 +2,11 @@
 
   <div>
 
-    <HeaderComp @sendInput='recivedQuery'
-    />
+    <HeaderComp @sendInput='recivedQuery' />
   
     <MainComp
     :resultFromApi="resultFilm"
-    :resultFromApiSeries="resultSeries"/>
+    :resultFromApiSeries="resultSeries" />
 
     
 
@@ -82,7 +81,7 @@ export default {
     getTrendingSeries(){
       axios.get('https://api.themoviedb.org/3/trending/tv/week?api_key=09c0eb08b2b03d28fec477a94fe6bd5f')
       .then(res => {
-        console.log(res.data.results , 'sono i res film')
+        console.log(res.data.results , 'sono i res tv')
         this.resultSeries = res.data.results;
       })
     },

@@ -14,8 +14,8 @@
         v-if="show == index" 
         class="film-info position-absolute d-flex flex-column">
 
-          <p> <span>Titolo:</span><br>{{result.title}} </p>
-          <p> <span>Titolo Originale:</span><br>{{result.original_title}}</p>
+          <p> <span>Titolo:</span><br>{{result.title  || result.name}} </p>
+          <p> <span>Titolo Originale:</span><br>{{result.original_title || result.original_name}}</p>
           <p><img :src="flagGen(result.original_language)" alt="" class="flag-img"> </p> 
           <p>
             <font-awesome-icon icon="fa-solid fa-star" :class="{vote : avgVoteToStar(result.vote_average) > 0 }" />
@@ -107,6 +107,8 @@ export default {
     font-weight: 600;
     top: 50%;
     transform: translateY(-50%);
+    border: 1px solid white;
+    border-right: none;
     .text{
       padding: 5px;
       height: 90%;
@@ -126,14 +128,18 @@ export default {
     left: 100%;
     height: 100%;
     width: 100%;
-    background-color: #fff8e6;
+    // background-color: #fff8e6;
+    background-color: #141414;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
+    border: 1px solid white;
+    border-left: none;
     span{
       font-weight: 800;
-      color: black;
+      color: white;
     }
     p{
+      color: white;
       img.flag-img{
         width: 40px;
         filter: none;

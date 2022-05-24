@@ -1,18 +1,32 @@
 <template>
 <main>
-  <div class="container film-container">
+
+  <div class="container main-container">
     <h1 class="pb-5">Film</h1>
     <div>
-      <CardComp class=" d-flex flex-wrap gap-3" :resultFromApi="resultFromApi"/>
+
+      <CardComp v-if="resultFromApi.length > 0" class=" d-flex flex-wrap gap-3" :resultFromApi="resultFromApi"/>
+      <div v-else>
+        <h2>Nessun risultato</h2>
+      </div>
+ 
     </div>
   </div>
 
-  <div class="container">
+  <div class="container main-container">
     <h1 class="pb-5">Serie Tv</h1>
     <div>
-      <CardCompForSeries class=" d-flex flex-wrap gap-3" :resultFromApiSeries="resultFromApiSeries"/>
+      
+      <CardComp v-if="resultFromApi.length > 0" class=" d-flex flex-wrap gap-3" :resultFromApi="resultFromApiSeries"/>
+      <div v-else>
+        <h2>Nessun risultato</h2>
+      </div>
+
     </div>
   </div>
+  
+
+
 </main>
 
   
@@ -20,7 +34,7 @@
 
 <script>
 import CardComp from './CardComp.vue';
-import CardCompForSeries from './CardCompForSeries.vue';
+
 
 export default {
   name: "MainComp",
@@ -30,20 +44,22 @@ export default {
   },
   components: { 
     CardComp,
-    CardCompForSeries 
   }
 }
 </script>
 
 <style lang="scss" scoped>
 h1{
-  font-size: 100px;
+  font-size: 80px;
   color: white;
   
 }
 main{
   background-color: black;
   min-height: 100vh;
+}
+.main-container{
+  min-height: 00px;
 }
 
 </style>
