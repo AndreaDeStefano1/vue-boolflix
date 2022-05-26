@@ -5,7 +5,7 @@
     <div v-for="(result,index) in resultFromApi" :key="`film-${index}`" @mouseenter="show = index" class="film-card" >
   
       <div     
-        @mouseleave="show = -1"
+        @mouseleave="show = -1 , showAdd = false"
         class=" d-flex h-100 position-relative">
 
         <img v-if="result.poster_path != null" class="h-100 w-100 w-100" :src="`https://image.tmdb.org/t/p/w200${result.poster_path}`" alt="">
@@ -13,9 +13,18 @@
         <div 
         v-if="show == index" 
         class="film-info position-absolute d-flex flex-column">
+          <!-- <button @click="savePrefered(index)"> Add </button> -->
 
-          <p> <span>Titolo:</span><br>{{result.title  || result.name}} </p>
-          <p> <span>Titolo Originale:</span><br>{{result.original_title || result.original_name}}</p>
+          <p class="position-relative">
+            <span>Titolo:</span><br>
+            {{result.title  || result.name}} 
+            <span class="save-prefered position-absolute">
+              <font-awesome-icon
+              @click="savePrefered(index)"
+              icon="fa-solid fa-star" />
+            </span>
+          </p>
+          <p><span>Titolo Originale:</span><br>{{result.original_title || result.original_name}}</p>
           <p><img :src="flagGen(result.original_language)" alt="" class="flag-img"> </p> 
           
           <p>
@@ -34,7 +43,6 @@
 
         <div 
         v-if="show == index"
-        @mouseleave="showAdd = false" 
         class="film-overview position-absolute">
           <div @click="getCast(result.id), getGenre(result.genre_ids)" class="text position-relative">
              
@@ -50,7 +58,7 @@
             </ul>
             
             <p v-if="!showAdd">
-              Clicca per Maggiori info<br>
+              <span>Clicca per Maggiori info</span><br>
               {{result.overview}} 
             </p>
           </div>
@@ -110,7 +118,6 @@ export default {
           
         }
       })
-      
     },
     getGenre(genreTemporary){
       this.genreArray = [];
@@ -124,16 +131,33 @@ export default {
             console.log(genre == element.id)
             if(genre == element.id){
               this.genreArray.push(element.name)
-            }
-            
-          }
-        console.log('ciao', this.genreArray)
-          
+            }            
+          }          
         });
       })
+    },
+    savePrefered(index){
+      axios.get('http://localhost:3000/prefered')
+      .then(r => {
+        if(r.data.length == 0){
+        axios.post('http://localhost:3000/prefered', this.resultFromApi[index]) 
+        }else{
+          let isSaved = false;
+          r.data.forEach(obj => {
+            if(obj.id == this.resultFromApi[index].id){       
+              isSaved = true;              
+            }            
+          });
+          if(isSaved){       
+            let filmId = this.resultFromApi[index].id
+            axios.delete(`http://localhost:3000/prefered/${filmId}`);
+          }else{
+            axios.post('http://localhost:3000/prefered', this.resultFromApi[index]);
+          }
+        }        
+      }) 
     }
   }
-
 }
 </script>
 
@@ -173,11 +197,16 @@ export default {
       -ms-overflow-style: none;  
       scrollbar-width: none;
       color: white;
-
+      span{
+        color: #dc1a28;
+        font-size: 14px;
+        font-weight: bold;
+      }
       &::-webkit-scrollbar {
         display: none; 
       }
     }
+
     .additional-info{
       p{
         font-size: 15px;
@@ -185,6 +214,7 @@ export default {
       li{
         font-size: 13px;
       }
+
     }
   }
   .film-info{
@@ -201,6 +231,11 @@ export default {
     span{
       font-weight: 800;
       color: white;
+    }
+    .save-prefered{
+      right: 7px;
+      top: 7px;
+      cursor: pointer;
     }
     p{
       color: white;

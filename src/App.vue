@@ -2,7 +2,9 @@
 
   <div>
 
-    <HeaderComp @sendInput='recivedQuery' />
+    <HeaderComp 
+    @sendInput='recivedQuery'
+    />
   
     <MainComp
     :resultFromApi="resultFilm"
@@ -10,7 +12,8 @@
     :isLoadedFilms="isLoadedFilms"
     :isLoadedSeries="isLoadedSeries"
     :showFilms="showFilms"
-    :showSeries="showSeries"/>
+    :showSeries="showSeries"
+    />
 
     
 
@@ -40,7 +43,7 @@ export default {
       isLoadedFilms: false,
       isLoadedSeries: false,
       showFilms: false,
-      showSeries: false
+      showSeries: false,
     }
   },
   methods:{
@@ -86,7 +89,6 @@ export default {
         }
       })
       .then(res => {
-        console.log(res.data.results , 'sono i res serie')
         this.resultSeries = res.data.results;
         this.isLoadedSeries = true;
         this.showSeries = true;
@@ -110,7 +112,6 @@ export default {
         this.showSeries = true;
       })
     },
-
   },
   mounted(){
     this.getTrendingFilm();
